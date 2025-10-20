@@ -12,6 +12,7 @@ public class BoxData : MonoBehaviour
     public BoxType boxType = BoxType.Red;
     public float weight = 1f;
 
+
     // Call this after setting boxType
     public void ApplyMaterial(Material red, Material blue, Material green)
     {

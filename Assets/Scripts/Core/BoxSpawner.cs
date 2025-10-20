@@ -6,12 +6,6 @@ public class BoxSpawner : MonoBehaviour
     public float spawnIntervalSeconds = 1.5f;
     public Vector3 spawnOffset = new Vector3(0f, 1f, 0f);
 
-    // Assign these in the Inspector to your existing materials:
-    // Box_Red, Box_Blue, Box_Green
-    public Material materialRed;
-    public Material materialBlue;
-    public Material materialGreen;
-
     private float timer = 0f;
 
     private void Update()

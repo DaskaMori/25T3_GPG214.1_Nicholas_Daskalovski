@@ -7,6 +7,18 @@ public class BinTrigger : MonoBehaviour
     public int correctCount = 0;
     public int incorrectCount = 0;
 
+    private StreamingAudioManager sfxManager;
+
+    [Obsolete("Obsolete")]
+    private void Start()
+    {
+        sfxManager = FindObjectOfType<StreamingAudioManager>();
+        if (sfxManager == null)
+        {
+            Debug.LogWarning("BinTrigger: No StreamingAudioManager found in scene.");
+        }
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         BoxData data = other.GetComponent<BoxData>();
@@ -15,15 +27,19 @@ public class BinTrigger : MonoBehaviour
             return;
         }
 
-        if (data.boxType == acceptsType)
+        bool isCorrect = data.boxType == acceptsType;
+
+        if (isCorrect)
         {
             correctCount++;
-            Destroy(other.gameObject);
+            sfxManager?.PlayCorrectSound();
         }
         else
         {
             incorrectCount++;
-            Destroy(other.gameObject);
+            sfxManager?.PlayIncorrectSound();
         }
+
+        Destroy(other.gameObject);
     }
 }
