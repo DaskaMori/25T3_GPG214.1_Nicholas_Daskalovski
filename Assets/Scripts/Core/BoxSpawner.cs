@@ -1,50 +1,54 @@
+using Streaming;
 using UnityEngine;
 
-public class BoxSpawner : MonoBehaviour
+namespace Core
 {
-    public GameObject boxPrefab;
-    public float spawnIntervalSeconds = 1.5f;
-    public Vector3 spawnOffset = new Vector3(0f, 1f, 0f);
-
-    private float timer = 0f;
-
-    private void Update()
+    public class BoxSpawner : MonoBehaviour
     {
-        timer = timer + Time.deltaTime;
+        public GameObject boxPrefab;
+        public float spawnIntervalSeconds = 1.5f;
+        public Vector3 spawnOffset = new Vector3(0f, 1f, 0f);
 
-        if (timer >= spawnIntervalSeconds)
+        private float timer = 0f;
+
+        private void Update()
         {
-            timer = 0f;
+            timer = timer + Time.deltaTime;
 
-            if (boxPrefab == null)
+            if (timer >= spawnIntervalSeconds)
             {
-                Debug.LogError("BoxSpawner: boxPrefab is NULL.");
-                return;
+                timer = 0f;
+
+                if (boxPrefab == null)
+                {
+                    Debug.LogError("BoxSpawner: boxPrefab is NULL.");
+                    return;
+                }
+
+                Vector3 pos = transform.position + spawnOffset;
+                GameObject g = Instantiate(boxPrefab, pos, Quaternion.identity);
+
+                BoxData d = g.GetComponent<BoxData>();
+                if (d == null)
+                {
+                    Debug.LogError("BoxSpawner: Spawned box is missing BoxData.");
+                    return;
+                }
+
+                int roll = Random.Range(0, 3);
+                if (roll == 0) { d.boxType = BoxType.Red; }
+                if (roll == 1) { d.boxType = BoxType.Blue; }
+                if (roll == 2) { d.boxType = BoxType.Green; }
+
+                BoxTextureLoader loader = g.GetComponent<BoxTextureLoader>();
+                if (loader != null)
+                {
+                    loader.LoadTextureFromStreamingAssets();
+                }
+
+                // Helpful when debugging routes/splitters
+                g.name = "Box_" + d.boxType.ToString();
             }
-
-            Vector3 pos = transform.position + spawnOffset;
-            GameObject g = Instantiate(boxPrefab, pos, Quaternion.identity);
-
-            BoxData d = g.GetComponent<BoxData>();
-            if (d == null)
-            {
-                Debug.LogError("BoxSpawner: Spawned box is missing BoxData.");
-                return;
-            }
-
-            int roll = Random.Range(0, 3);
-            if (roll == 0) { d.boxType = BoxType.Red; }
-            if (roll == 1) { d.boxType = BoxType.Blue; }
-            if (roll == 2) { d.boxType = BoxType.Green; }
-
-            BoxTextureLoader loader = g.GetComponent<BoxTextureLoader>();
-            if (loader != null)
-            {
-                loader.LoadTextureFromStreamingAssets();
-            }
-
-            // Helpful when debugging routes/splitters
-            g.name = "Box_" + d.boxType.ToString();
         }
     }
 }

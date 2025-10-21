@@ -1,56 +1,59 @@
 using UnityEngine;
 
-public enum BoxType
+namespace Core
 {
-    Red,
-    Blue,
-    Green
-}
-
-public class BoxData : MonoBehaviour
-{
-    public BoxType boxType = BoxType.Red;
-    public float weight = 1f;
-
-
-    // Call this after setting boxType
-    public void ApplyMaterial(Material red, Material blue, Material green)
+    public enum BoxType
     {
-        if (red == null || blue == null || green == null)
+        Red,
+        Blue,
+        Green
+    }
+
+    public class BoxData : MonoBehaviour
+    {
+        public BoxType boxType = BoxType.Red;
+        public float weight = 1f;
+
+
+        // Call this after setting boxType
+        public void ApplyMaterial(Material red, Material blue, Material green)
         {
-            Debug.LogError("BoxData.ApplyMaterial: One or more material references are NULL.");
-            return;
-        }
-
-        Material chosen = red;
-        if (boxType == BoxType.Blue) { chosen = blue; }
-        if (boxType == BoxType.Green) { chosen = green; }
-
-        Renderer[] renderers = GetComponentsInChildren<Renderer>(true);
-        if (renderers == null || renderers.Length == 0)
-        {
-            Debug.LogError("BoxData.ApplyMaterial: No Renderer found on box prefab or its children.");
-            return;
-        }
-
-        // Apply to every renderer and every submesh
-        for (int i = 0; i < renderers.Length; i = i + 1)
-        {
-            Renderer r = renderers[i];
-            if (r == null) { continue; }
-
-            Material[] mats = r.sharedMaterials; 
-            if (mats == null || mats.Length == 0)
+            if (red == null || blue == null || green == null)
             {
-                r.sharedMaterial = chosen;
-                continue;
+                Debug.LogError("BoxData.ApplyMaterial: One or more material references are NULL.");
+                return;
             }
 
-            for (int m = 0; m < mats.Length; m = m + 1)
+            Material chosen = red;
+            if (boxType == BoxType.Blue) { chosen = blue; }
+            if (boxType == BoxType.Green) { chosen = green; }
+
+            Renderer[] renderers = GetComponentsInChildren<Renderer>(true);
+            if (renderers == null || renderers.Length == 0)
             {
-                mats[m] = chosen;
+                Debug.LogError("BoxData.ApplyMaterial: No Renderer found on box prefab or its children.");
+                return;
             }
-            r.sharedMaterials = mats;
+
+            // Apply to every renderer and every submesh
+            for (int i = 0; i < renderers.Length; i = i + 1)
+            {
+                Renderer r = renderers[i];
+                if (r == null) { continue; }
+
+                Material[] mats = r.sharedMaterials; 
+                if (mats == null || mats.Length == 0)
+                {
+                    r.sharedMaterial = chosen;
+                    continue;
+                }
+
+                for (int m = 0; m < mats.Length; m = m + 1)
+                {
+                    mats[m] = chosen;
+                }
+                r.sharedMaterials = mats;
+            }
         }
     }
 }

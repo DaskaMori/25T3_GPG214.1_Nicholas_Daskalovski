@@ -1,45 +1,49 @@
 using System;
+using Streaming;
 using UnityEngine;
 
-public class BinTrigger : MonoBehaviour
+namespace Core
 {
-    public BoxType acceptsType = BoxType.Red;
-    public int correctCount = 0;
-    public int incorrectCount = 0;
-
-    private StreamingAudioManager sfxManager;
-
-    [Obsolete("Obsolete")]
-    private void Start()
+    public class BinTrigger : MonoBehaviour
     {
-        sfxManager = FindObjectOfType<StreamingAudioManager>();
-        if (sfxManager == null)
+        public BoxType acceptsType;
+        public int correctCount = 0;
+        public int incorrectCount = 0;
+
+        private StreamingAudioManager sfxManager;
+
+        [Obsolete("Obsolete")]
+        private void Start()
         {
-            Debug.LogWarning("BinTrigger: No StreamingAudioManager found in scene.");
+            sfxManager = FindObjectOfType<StreamingAudioManager>();
+            if (sfxManager == null)
+            {
+                Debug.LogWarning("BinTrigger: No StreamingAudioManager found in scene.");
+            }
         }
-    }
     
-    private void OnTriggerEnter(Collider other)
-    {
-        BoxData data = other.GetComponent<BoxData>();
-        if (data == null)
+        private void OnTriggerEnter(Collider other)
         {
-            return;
+            BoxData box = other.GetComponent<BoxData>();
+            if (box == null) return;
+
+            bool isCorrect = box.boxType == acceptsType;
+
+            GameManager.Instance.RecordSort(acceptsType.ToString(), isCorrect);
+
+            if (isCorrect)
+            {
+                correctCount++;
+                sfxManager?.PlayCorrectSound();  
+            }
+            else
+            {
+                incorrectCount++;
+                sfxManager?.PlayIncorrectSound(); 
+            }
+
+            Destroy(other.gameObject);
         }
 
-        bool isCorrect = data.boxType == acceptsType;
-
-        if (isCorrect)
-        {
-            correctCount++;
-            sfxManager?.PlayCorrectSound();
-        }
-        else
-        {
-            incorrectCount++;
-            sfxManager?.PlayIncorrectSound();
-        }
-
-        Destroy(other.gameObject);
     }
 }
