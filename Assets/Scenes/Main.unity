@@ -778,12 +778,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35c4e058b612da44baee638e5a37cf9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redBin: {fileID: 2120966645}
-  greenBin: {fileID: 760483707}
-  blueBin: {fileID: 1747245505}
-  redText: {fileID: 1766872692}
-  greenText: {fileID: 1019772906}
-  blueText: {fileID: 348592548}
+  woodBin: {fileID: 0}
+  carbonBin: {fileID: 0}
+  metalBin: {fileID: 0}
+  woodText: {fileID: 0}
+  carbonText: {fileID: 0}
+  metalText: {fileID: 0}
 --- !u!4 &278309413
 Transform:
   m_ObjectHideFlags: 0
@@ -1060,7 +1060,7 @@ GameObject:
   - component: {fileID: 348592549}
   - component: {fileID: 348592548}
   m_Layer: 5
-  m_Name: GreenStatsText
+  m_Name: MetalStatsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2079,11 +2079,23 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: a9e5f045f065f1341b2f289b291aff3c, type: 2}
     - target: {fileID: 5895207570786255407, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
       propertyPath: m_Name
-      value: BinGreen
+      value: BinCarbon
       objectReference: {fileID: 0}
     - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
       propertyPath: acceptsType
+      value: Carbon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
+      propertyPath: acceptedTypes.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
+      propertyPath: 'acceptedTypes.Array.data[0]'
+      value: Carbon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
+      propertyPath: 'acceptedTypes.Array.data[1]'
+      value: Heavy
       objectReference: {fileID: 0}
     - target: {fileID: 6522387233416730773, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2135,17 +2147,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6522387233416730773, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
   m_PrefabInstance: {fileID: 760483702}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &760483707 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
-  m_PrefabInstance: {fileID: 760483702}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4363f1b466ff47d419deee2b97312163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &825319761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2160,7 +2161,23 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 39fc3bf8b5fea0f4d91632f2e2bd12be, type: 2}
     - target: {fileID: 5895207570786255407, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
       propertyPath: m_Name
-      value: BinRed
+      value: BinWood
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
+      propertyPath: acceptsType
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
+      propertyPath: acceptedTypes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
+      propertyPath: 'acceptedTypes.Array.data[0]'
+      value: Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
+      propertyPath: 'acceptedTypes.Array.data[1]'
+      value: Heavy
       objectReference: {fileID: 0}
     - target: {fileID: 6522387233416730773, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2682,7 +2699,7 @@ GameObject:
   - component: {fileID: 1019772905}
   - component: {fileID: 1019772906}
   m_Layer: 5
-  m_Name: BlueStatsText
+  m_Name: CarbonStatsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4072,11 +4089,23 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4873bb6019494f6408df66362191396a, type: 2}
     - target: {fileID: 5895207570786255407, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
       propertyPath: m_Name
-      value: BinBlue
+      value: BinMetal
       objectReference: {fileID: 0}
     - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
       propertyPath: acceptsType
-      value: 1
+      value: Metal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
+      propertyPath: acceptedTypes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
+      propertyPath: 'acceptedTypes.Array.data[0]'
+      value: Metal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
+      propertyPath: 'acceptedTypes.Array.data[1]'
+      value: Heavy
       objectReference: {fileID: 0}
     - target: {fileID: 6522387233416730773, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4128,17 +4157,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6522387233416730773, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
   m_PrefabInstance: {fileID: 1747245503}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1747245505 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
-  m_PrefabInstance: {fileID: 1747245503}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4363f1b466ff47d419deee2b97312163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1766872689
 GameObject:
   m_ObjectHideFlags: 0
@@ -4151,7 +4169,7 @@ GameObject:
   - component: {fileID: 1766872691}
   - component: {fileID: 1766872692}
   m_Layer: 5
-  m_Name: RedStatsText
+  m_Name: WoodStatsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5353,17 +5371,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2120966645 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5955161452547301413, guid: ab8252fe116229f4a941c9663948f24f, type: 3}
-  m_PrefabInstance: {fileID: 825319761}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4363f1b466ff47d419deee2b97312163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2126181671
 GameObject:
   m_ObjectHideFlags: 0
