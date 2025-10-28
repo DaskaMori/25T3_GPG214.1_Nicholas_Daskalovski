@@ -1,59 +1,46 @@
 using UnityEngine;
 
+
 namespace Core
 {
-    public enum BoxType
-    {
-        Red,
-        Blue,
-        Green
-    }
-
+    [System.Serializable]
     public class BoxData : MonoBehaviour
     {
-        public BoxType boxType = BoxType.Red;
+        [Header("Crate Properties")]
+        public string boxType = "Red"; 
         public float weight = 1f;
 
 
-        // Call this after setting boxType
-        public void ApplyMaterial(Material red, Material blue, Material green)
+        [Header("Optional Base Materials")]
+        public Material materialRed;
+        public Material materialBlue;
+        public Material materialGreen;
+
+
+        public void ApplyMaterial()
         {
-            if (red == null || blue == null || green == null)
-            {
-                Debug.LogError("BoxData.ApplyMaterial: One or more material references are NULL.");
-                return;
-            }
-
-            Material chosen = red;
-            if (boxType == BoxType.Blue) { chosen = blue; }
-            if (boxType == BoxType.Green) { chosen = green; }
-
             Renderer[] renderers = GetComponentsInChildren<Renderer>(true);
-            if (renderers == null || renderers.Length == 0)
+            if (renderers == null || renderers.Length == 0) return;
+
+
+            Material chosen = null;
+            switch (boxType)
             {
-                Debug.LogError("BoxData.ApplyMaterial: No Renderer found on box prefab or its children.");
-                return;
+                case "Red": chosen = materialRed; break;
+                case "Blue": chosen = materialBlue; break;
+                case "Green": chosen = materialGreen; break;
+                default: chosen = materialRed; break; 
             }
 
-            // Apply to every renderer and every submesh
-            for (int i = 0; i < renderers.Length; i = i + 1)
-            {
-                Renderer r = renderers[i];
-                if (r == null) { continue; }
 
-                Material[] mats = r.sharedMaterials; 
-                if (mats == null || mats.Length == 0)
-                {
-                    r.sharedMaterial = chosen;
-                    continue;
-                }
+            foreach (var r in renderers)
+                r.sharedMaterial = chosen;
+        }
 
-                for (int m = 0; m < mats.Length; m = m + 1)
-                {
-                    mats[m] = chosen;
-                }
-                r.sharedMaterials = mats;
-            }
+
+        public void SetType(string newType)
+        {
+            boxType = newType;
         }
     }
 }

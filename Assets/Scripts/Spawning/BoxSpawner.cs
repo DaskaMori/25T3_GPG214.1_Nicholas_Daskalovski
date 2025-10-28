@@ -1,7 +1,8 @@
+using Core;
 using Streaming;
 using UnityEngine;
 
-namespace Core
+namespace Spawning
 {
     public class BoxSpawner : MonoBehaviour
     {
@@ -11,9 +12,11 @@ namespace Core
 
         private float timer = 0f;
 
+        private readonly string[] boxTypes = { "Wood", "Carbon", "Metal" };
+
         private void Update()
         {
-            timer = timer + Time.deltaTime;
+            timer += Time.deltaTime;
 
             if (timer >= spawnIntervalSeconds)
             {
@@ -35,19 +38,14 @@ namespace Core
                     return;
                 }
 
-                int roll = Random.Range(0, 3);
-                if (roll == 0) { d.boxType = BoxType.Red; }
-                if (roll == 1) { d.boxType = BoxType.Blue; }
-                if (roll == 2) { d.boxType = BoxType.Green; }
+                int roll = Random.Range(0, boxTypes.Length);
+                string chosenType = boxTypes[roll];
+                d.SetType(chosenType);
 
                 BoxTextureLoader loader = g.GetComponent<BoxTextureLoader>();
-                if (loader != null)
-                {
-                    loader.LoadTextureFromStreamingAssets();
-                }
+                loader?.LoadTextureFromStreamingAssets();
 
-                // Helpful when debugging routes/splitters
-                g.name = "Box_" + d.boxType.ToString();
+                g.name = "Box_" + chosenType;
             }
         }
     }

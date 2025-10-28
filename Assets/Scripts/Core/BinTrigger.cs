@@ -1,4 +1,3 @@
-using System;
 using Streaming;
 using UnityEngine;
 
@@ -6,44 +5,54 @@ namespace Core
 {
     public class BinTrigger : MonoBehaviour
     {
-        public BoxType acceptsType;
+        public string[] acceptedTypes;
+
         public int correctCount = 0;
         public int incorrectCount = 0;
 
         private StreamingAudioManager sfxManager;
 
-        [Obsolete("Obsolete")]
+        [System.Obsolete]
         private void Start()
         {
             sfxManager = FindObjectOfType<StreamingAudioManager>();
             if (sfxManager == null)
             {
-                Debug.LogWarning("BinTrigger: No StreamingAudioManager found in scene.");
+                Debug.LogWarning("BinTrigger: No StreamingAudioManager found.");
             }
         }
-    
+
         private void OnTriggerEnter(Collider other)
         {
             BoxData box = other.GetComponent<BoxData>();
             if (box == null) return;
 
-            bool isCorrect = box.boxType == acceptsType;
+            string boxType = box.boxType;
 
-            GameManager.Instance.RecordSort(acceptsType.ToString(), isCorrect);
+            bool isCorrect = false;
+            foreach (string accepted in acceptedTypes)
+            {
+                if (boxType.Equals(accepted, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    isCorrect = true;
+                    break;
+                }
+            }
+
+            GameManager.Instance.RecordSort(boxType, isCorrect);
 
             if (isCorrect)
             {
                 correctCount++;
-                sfxManager?.PlayCorrectSound();  
+                sfxManager?.PlayCorrectSound();
             }
             else
             {
                 incorrectCount++;
-                sfxManager?.PlayIncorrectSound(); 
+                sfxManager?.PlayIncorrectSound();
             }
 
             Destroy(other.gameObject);
         }
-
     }
 }

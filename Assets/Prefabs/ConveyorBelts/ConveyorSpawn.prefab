@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3034988207718567787}
   - component: {fileID: 2139678372335157454}
   - component: {fileID: 4203368551271068676}
-  - component: {fileID: 51702867907407858}
+  - component: {fileID: 2611623995951770675}
   m_Layer: 6
   m_Name: ConveyorSpawn
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2402003124213568977}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17, y: 2.229461, z: -21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -90,7 +90,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &51702867907407858
+--- !u!114 &2611623995951770675
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,12 +99,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2402003124213568977}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb43015d78639c24b80ef601cae63eaa, type: 3}
+  m_Script: {fileID: 11500000, guid: 623fd9978856c2c4a8234495718850ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxPrefab: {fileID: 4478063807441447940, guid: 6171ef9c5bcada9428fc0e976d71276a, type: 3}
+  baseCratePrefab: {fileID: 4478063807441447940, guid: 6171ef9c5bcada9428fc0e976d71276a, type: 3}
   spawnIntervalSeconds: 1.5
   spawnOffset: {x: 0, y: 1, z: 0}
+  crateTypes:
+  - crateType: Wood
+    isFromBundle: 0
+    bundleName: 
+  - crateType: Metal
+    isFromBundle: 0
+    bundleName: 
+  - crateType: Carbon
+    isFromBundle: 0
+    bundleName: 
+  - crateType: Heavy
+    isFromBundle: 1
+    bundleName: heavycrate
 --- !u!1 &4527466525226891525
 GameObject:
   m_ObjectHideFlags: 0

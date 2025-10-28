@@ -1,4 +1,4 @@
-using Core;
+/*using Core;
 using UnityEngine;
 using UnityEngine.UI;
 using SaveLoad;
@@ -7,28 +7,28 @@ namespace UI
 {
     public class BinStatsUiManager : MonoBehaviour
     {
-        public BinTrigger redBin;
-        public BinTrigger greenBin;
-        public BinTrigger blueBin;
+        public BinTrigger woodBin;
+        public BinTrigger carbonBin;
+        public BinTrigger metalBin;
 
-        public Text redText;
-        public Text greenText;
-        public Text blueText;
+        public Text woodText;
+        public Text carbonText;
+        public Text metalText;
 
         private void Update()
         {
             var state = GameManager.Instance.State;
 
-            var red = state.GetCounts("Red");
-            var green = state.GetCounts("Green");
-            var blue = state.GetCounts("Blue");
+            var red = state.GetCounts("Wood");
+            var green = state.GetCounts("Carbon");
+            var blue = state.GetCounts("Metal");
 
-            redText.text = $"Red Bin\nCorrect: {red.correct}\nIncorrect: {red.incorrect}";
-            greenText.text = $"Green Bin\nCorrect: {green.correct}\nIncorrect: {green.incorrect}";
-            blueText.text = $"Blue Bin\nCorrect: {blue.correct}\nIncorrect: {blue.incorrect}";
+            woodText.text = $"Wood Bin\nCorrect: {red.correct}\nIncorrect: {red.incorrect}";
+            carbonText.text = $"Carbon Bin\nCorrect: {green.correct}\nIncorrect: {green.incorrect}";
+            metalText.text = $"Metal Bin\nCorrect: {blue.correct}\nIncorrect: {blue.incorrect}";
         }
 
 
     }
-}
+}*/
 

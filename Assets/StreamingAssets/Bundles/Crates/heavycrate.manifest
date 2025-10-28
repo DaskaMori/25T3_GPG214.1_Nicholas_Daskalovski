@@ -1,0 +1,49 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.55f1
+CRC: 1231513647
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a0ee51f1a39f5d8597791ae1ca441b54
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2bf293481c2ba52aa43964a02dcc92c0
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: f9127b208cae885d430138128e15037f
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: b7ab28e557bf1b8418a3d08828497554, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4a38922a0310fbb40a6c176a5975411c, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 134
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Bundles/HeavyCrate/Heavy.prefab
+- Assets/Bundles/HeavyCrate/Texture_Heavy.png
+- Assets/Bundles/HeavyCrate/HeavyMaterial.mat
+Dependencies: []

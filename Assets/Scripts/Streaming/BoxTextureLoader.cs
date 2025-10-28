@@ -6,42 +6,35 @@ namespace Streaming
 {
     public class BoxTextureLoader : MonoBehaviour
     {
+        public string textureFolder = "CrateSkins"; 
+
         public void LoadTextureFromStreamingAssets()
         {
             BoxData data = GetComponent<BoxData>();
             if (data == null)
             {
-                Debug.LogError("No BoxData component found on box.");
+                Debug.LogError("[BoxTextureLoader] No BoxData component found on this object.");
                 return;
             }
 
-            string fileName = GetFileNameForType(data.boxType);
-            string filePath = Path.Combine(Application.streamingAssetsPath, "CrateSkins", fileName);
+            string fileName = $"texture_{data.boxType.ToLower()}.png";
+            string filePath = Path.Combine(Application.streamingAssetsPath, textureFolder, fileName);
             filePath = filePath.Replace("\\", "/");
 
-            Debug.Log("[BoxTextureLoader] Looking for texture at: " + filePath);
+            Debug.Log($"[BoxTextureLoader] Looking for texture at: {filePath}");
 
             if (!File.Exists(filePath))
             {
-                Debug.LogError("Texture file not found at path: " + filePath);
+                Debug.LogWarning($"[BoxTextureLoader] Texture not found for '{data.boxType}', using fallback.");
+                ApplyFallbackTexture();
                 return;
             }
 
+            // Load the texture file
             byte[] imageBytes = File.ReadAllBytes(filePath);
             Texture2D texture = new Texture2D(2, 2);
             texture.LoadImage(imageBytes);
             ApplyTextureToRenderer(texture);
-        }
-
-        private string GetFileNameForType(BoxType type)
-        {
-            switch (type)
-            {
-                case BoxType.Red: return "texture_carbon.png";
-                case BoxType.Blue: return "texture_metal.png";
-                case BoxType.Green: return "texture_wood.png";
-                default: return "texture_carbon.png";
-            }
         }
 
         private void ApplyTextureToRenderer(Texture2D texture)
@@ -49,13 +42,25 @@ namespace Streaming
             Renderer renderer = GetComponentInChildren<Renderer>();
             if (renderer == null)
             {
-                Debug.LogError("No Renderer found on box.");
+                Debug.LogError("[BoxTextureLoader] No Renderer found on prefab.");
                 return;
             }
 
             Material materialInstance = new Material(renderer.sharedMaterial);
             materialInstance.mainTexture = texture;
             renderer.material = materialInstance;
+
+            Debug.Log("[BoxTextureLoader] Texture applied successfully!");
+        }
+
+        private void ApplyFallbackTexture()
+        {
+            Renderer renderer = GetComponentInChildren<Renderer>();
+            if (renderer == null) return;
+
+            Material fallbackMat = new Material(renderer.sharedMaterial);
+            fallbackMat.color = Color.gray;
+            renderer.material = fallbackMat;
         }
     }
 }
