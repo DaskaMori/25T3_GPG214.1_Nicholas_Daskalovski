@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5773532194011619529}
   - component: {fileID: 2574435736638906281}
   - component: {fileID: 2327014850352925447}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Crate_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,6 +131,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boxType: 0
   weight: 1
+  materialRed: {fileID: 0}
+  materialBlue: {fileID: 0}
+  materialGreen: {fileID: 0}
 --- !u!114 &2574435736638906281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ab28e557bf1b8418a3d08828497554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textureFolder: CrateSkins
 --- !u!136 &2327014850352925447
 CapsuleCollider:
   m_ObjectHideFlags: 0

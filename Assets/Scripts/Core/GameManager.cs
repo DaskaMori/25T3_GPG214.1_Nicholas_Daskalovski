@@ -1,4 +1,5 @@
 using SaveLoad;
+using Spawning;
 using UnityEngine;
 using UI;
 
@@ -24,6 +25,7 @@ namespace Core
 
         public void SaveGame(string saveName)
         {
+            State.CaptureActiveCrates();  // Capture crates in scene
             SaveSystem.SaveToFile(State, saveName);
         }
 
@@ -33,14 +35,14 @@ namespace Core
             if (loaded != null)
             {
                 State = loaded;
-                //Debug.Log($"[GameManager] Loaded: {saveName}");
+                State.RestoreCratesFromState(); // Rebuild crates
             }
             else
             {
-                //Debug.LogWarning($"[GameManager] No save found for {saveName}, loading defaults.");
                 State = new GameState();
             }
         }
+
 
 
         public void RecordSort(string binColor, bool isCorrect)
