@@ -1,3 +1,4 @@
+using Spawning;
 using Streaming;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Core
             sfxManager = FindObjectOfType<StreamingAudioManager>();
             if (sfxManager == null)
             {
-                Debug.LogWarning("BinTrigger: No StreamingAudioManager found.");
+               //Debug.LogWarning("BinTrigger: No StreamingAudioManager found.");
             }
         }
 
@@ -27,17 +28,18 @@ namespace Core
             BoxData box = other.GetComponent<BoxData>();
             if (box == null) return;
 
-            string boxType = box.boxType;
+            string boxType = box.boxType.Trim().ToLowerInvariant();
 
             bool isCorrect = false;
             foreach (string accepted in acceptedTypes)
             {
-                if (boxType.Equals(accepted, System.StringComparison.OrdinalIgnoreCase))
+                if (boxType == accepted.Trim().ToLowerInvariant())
                 {
                     isCorrect = true;
                     break;
                 }
             }
+
 
             GameManager.Instance.RecordSort(boxType, isCorrect);
 
@@ -52,7 +54,7 @@ namespace Core
                 sfxManager?.PlayIncorrectSound();
             }
 
-            Destroy(other.gameObject);
+            CratePoolManager.Instance.ReturnCrate(other.gameObject, box.boxType);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Streaming
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
-                    Debug.LogError("Failed to load audio file: " + fileName + " | Error: " + request.error);
+                    //Debug.LogError("Failed to load audio file: " + fileName + " | Error: " + request.error);
                     yield break;
                 }
 

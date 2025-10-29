@@ -33,11 +33,11 @@ namespace Core
             if (loaded != null)
             {
                 State = loaded;
-                Debug.Log($"[GameManager] Loaded: {saveName}");
+                //Debug.Log($"[GameManager] Loaded: {saveName}");
             }
             else
             {
-                Debug.LogWarning($"[GameManager] No save found for {saveName}, loading defaults.");
+                //Debug.LogWarning($"[GameManager] No save found for {saveName}, loading defaults.");
                 State = new GameState();
             }
         }

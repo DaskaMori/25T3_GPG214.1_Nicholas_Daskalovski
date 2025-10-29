@@ -34,7 +34,7 @@ namespace Spawning
                 BoxData d = g.GetComponent<BoxData>();
                 if (d == null)
                 {
-                    Debug.LogError("BoxSpawner: Spawned box is missing BoxData.");
+                    //Debug.LogError("BoxSpawner: Spawned box is missing BoxData.");
                     return;
                 }
 

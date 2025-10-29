@@ -13,7 +13,7 @@ namespace Streaming
             BoxData data = GetComponent<BoxData>();
             if (data == null)
             {
-                Debug.LogError("[BoxTextureLoader] No BoxData component found on this object.");
+                //Debug.LogError("[BoxTextureLoader] No BoxData component found on this object.");
                 return;
             }
 
@@ -21,16 +21,15 @@ namespace Streaming
             string filePath = Path.Combine(Application.streamingAssetsPath, textureFolder, fileName);
             filePath = filePath.Replace("\\", "/");
 
-            Debug.Log($"[BoxTextureLoader] Looking for texture at: {filePath}");
+            //Debug.Log($"[BoxTextureLoader] Looking for texture at: {filePath}");
 
             if (!File.Exists(filePath))
             {
-                Debug.LogWarning($"[BoxTextureLoader] Texture not found for '{data.boxType}', using fallback.");
+                //Debug.LogWarning($"[BoxTextureLoader] Texture not found for '{data.boxType}', using fallback.");
                 ApplyFallbackTexture();
                 return;
             }
 
-            // Load the texture file
             byte[] imageBytes = File.ReadAllBytes(filePath);
             Texture2D texture = new Texture2D(2, 2);
             texture.LoadImage(imageBytes);
@@ -42,7 +41,7 @@ namespace Streaming
             Renderer renderer = GetComponentInChildren<Renderer>();
             if (renderer == null)
             {
-                Debug.LogError("[BoxTextureLoader] No Renderer found on prefab.");
+                //Debug.LogError("[BoxTextureLoader] No Renderer found on prefab.");
                 return;
             }
 
@@ -50,7 +49,7 @@ namespace Streaming
             materialInstance.mainTexture = texture;
             renderer.material = materialInstance;
 
-            Debug.Log("[BoxTextureLoader] Texture applied successfully!");
+            //Debug.Log("[BoxTextureLoader] Texture applied successfully!");
         }
 
         private void ApplyFallbackTexture()

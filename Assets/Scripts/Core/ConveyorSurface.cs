@@ -30,7 +30,7 @@ namespace Core
             float weight = 1f;
             if (boxData != null)
             {
-                weight = Mathf.Max(boxData.weight, 0.1f); // avoid divide-by-zero
+                weight = Mathf.Max(boxData.weight, 0.1f); 
             }
 
             Vector3 dir = conveyorDirection.normalized;

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Core;
 using Streaming;
@@ -11,14 +10,11 @@ namespace Spawning
     {
         public string crateType;
         public bool isFromBundle;
-        public string bundleName; // Required only if isFromBundle is true
+        public string bundleName;
     }
 
     public class BoxSpawnManager : MonoBehaviour
     {
-        [Header("Base Crate Prefab")]
-        public GameObject baseCratePrefab;
-
         [Header("Spawn Settings")]
         public float spawnIntervalSeconds = 1.5f;
         public Vector3 spawnOffset = new Vector3(0f, 1f, 0f);
@@ -26,9 +22,9 @@ namespace Spawning
         [Header("Crate Types")]
         public List<CrateDefinition> crateTypes = new List<CrateDefinition>
         {
-            new CrateDefinition { crateType = "Wood", isFromBundle = false },
-            new CrateDefinition { crateType = "Metal", isFromBundle = false },
-            new CrateDefinition { crateType = "Carbon", isFromBundle = false },
+            new CrateDefinition { crateType = "Wood" },
+            new CrateDefinition { crateType = "Metal" },
+            new CrateDefinition { crateType = "Carbon" },
             new CrateDefinition { crateType = "Heavy", isFromBundle = true, bundleName = "heavycrate" }
         };
 
@@ -48,32 +44,24 @@ namespace Spawning
         {
             int roll = Random.Range(0, crateTypes.Count);
             CrateDefinition chosen = crateTypes[roll];
-
             Vector3 spawnPos = transform.position + spawnOffset;
 
             if (chosen.isFromBundle)
             {
-                // Spawn from AssetBundle
                 StartCoroutine(SpawnManager.SpawnCrateAsync(chosen.bundleName, chosen.crateType, spawnPos));
             }
             else
             {
-                // Spawn from local prefab
-                GameObject g = Instantiate(baseCratePrefab, spawnPos, Quaternion.identity);
+                GameObject crate = CratePoolManager.Instance.GetCrate(chosen.crateType, spawnPos);
+                if (crate == null) return;
 
-                BoxData d = g.GetComponent<BoxData>();
-                if (d == null)
-                {
-                    Debug.LogError("[BoxSpawnManager] Spawned crate is missing BoxData.");
-                    return;
-                }
+                BoxData d = crate.GetComponent<BoxData>();
+                d?.SetType(chosen.crateType);
 
-                d.SetType(chosen.crateType);
-
-                BoxTextureLoader loader = g.GetComponent<BoxTextureLoader>();
+                BoxTextureLoader loader = crate.GetComponent<BoxTextureLoader>();
                 loader?.LoadTextureFromStreamingAssets();
 
-                g.name = "Box_" + chosen.crateType;
+                crate.name = "Box_" + chosen.crateType;
             }
         }
     }

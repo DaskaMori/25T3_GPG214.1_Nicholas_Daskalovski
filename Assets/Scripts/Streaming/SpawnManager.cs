@@ -1,47 +1,66 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
+using Spawning; // ✅ So we can access CratePoolManager
 
 namespace Streaming
 {
     public static class SpawnManager
     {
+        private static readonly Dictionary<string, AssetBundle> loadedBundles = new();
+
         public static IEnumerator SpawnCrateAsync(string bundleName, string assetName, Vector3 position)
         {
-            string path = System.IO.Path.Combine(Application.streamingAssetsPath, "Bundles", "Crates", bundleName);
-            string uri = "file://" + path;
+            AssetBundle bundle = null;
 
-            UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(uri);
-            yield return request.SendWebRequest();
-
-            if (request.result != UnityWebRequest.Result.Success)
+            if (!loadedBundles.TryGetValue(bundleName, out bundle))
             {
-                Debug.LogError($"[SpawnManager] Failed to load bundle '{bundleName}': {request.error}");
-                yield break;
+                string path = Path.Combine(Application.streamingAssetsPath, "Bundles", "Crates", bundleName);
+                string uri = "file://" + path;
+
+                UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(uri);
+                yield return request.SendWebRequest();
+
+                if (request.result != UnityWebRequest.Result.Success)
+                {
+                    //Debug.LogError($"[SpawnManager] Failed to load bundle '{bundleName}': {request.error}");
+                    yield break;
+                }
+
+                bundle = DownloadHandlerAssetBundle.GetContent(request);
+                if (bundle == null)
+                {
+                    //Debug.LogError($"[SpawnManager] Bundle '{bundleName}' is null.");
+                    yield break;
+                }
+
+                loadedBundles[bundleName] = bundle;
+                //Debug.Log($"[SpawnManager] Cached AssetBundle '{bundleName}'.");
             }
 
-            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(request);
-            if (bundle == null)
-            {
-                Debug.LogError($"[SpawnManager] Bundle is null: {bundleName}");
-                yield break;
-            }
-
-            AssetBundleRequest assetLoad = bundle.LoadAssetAsync<GameObject>(assetName);
-            yield return assetLoad;
-
-            GameObject prefab = assetLoad.asset as GameObject;
+            GameObject prefab = bundle.LoadAsset<GameObject>(assetName);
             if (prefab == null)
             {
-                Debug.LogError($"[SpawnManager] Crate prefab '{assetName}' not found in bundle '{bundleName}'");
-                bundle.Unload(false);
+                //Debug.LogError($"[SpawnManager] Crate prefab '{assetName}' not found in '{bundleName}'.");
+                yield break;
+            }
+            
+            if (!CratePoolManager.Instance.HasCrateType(assetName))
+            {
+                CratePoolManager.Instance.AddCrateType(assetName, prefab, 5);
+                //Debug.Log($"[SpawnManager] Added '{assetName}' crate to pool (from {bundleName}).");
+            }
+
+            GameObject pooledCrate = CratePoolManager.Instance.GetCrate(assetName, position);
+            if (pooledCrate == null)
+            {
+                //Debug.LogError($"[SpawnManager] Failed to spawn pooled crate: {assetName}");
                 yield break;
             }
 
-            GameObject spawned = GameObject.Instantiate(prefab, position, Quaternion.identity);
-            spawned.name = "Box_" + assetName;
-
-            bundle.Unload(false); // Keep assets in memory, unload container
+            pooledCrate.name = "Box_" + assetName;
         }
     }
 }

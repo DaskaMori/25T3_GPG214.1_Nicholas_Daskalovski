@@ -26,16 +26,16 @@ namespace UI
         {
             if (inputField == null)
             {
-                Debug.LogError("InputField reference is missing!");
+                //Debug.LogError("InputField reference is missing!");
                 return;
             }
 
             string saveName = inputField.text.Trim();
-            Debug.Log($"[SaveLoadButtonUI] Save name entered: '{saveName}'");
+            //Debug.Log($"[SaveLoadButtonUI] Save name entered: '{saveName}'");
 
             if (string.IsNullOrEmpty(saveName))
             {
-                Debug.LogWarning("[SaveLoadButtonUI] Save name is empty. Aborting save.");
+                //Debug.LogWarning("[SaveLoadButtonUI] Save name is empty. Aborting save.");
                 return;
             }
 
