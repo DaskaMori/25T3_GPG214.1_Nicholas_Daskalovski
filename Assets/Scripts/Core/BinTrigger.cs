@@ -1,47 +1,49 @@
+using System.Collections.Generic;
+using UnityEngine;
 using Spawning;
 using Streaming;
-using UnityEngine;
 
 namespace Core
 {
     public class BinTrigger : MonoBehaviour
     {
+        [Header("Accepted crate types (case-insensitive)")]
         public string[] acceptedTypes;
 
+        [Header("Local counters (optional, for per-bin UI)")]
         public int correctCount = 0;
         public int incorrectCount = 0;
 
         private StreamingAudioManager sfxManager;
+        private HashSet<string> acceptedSet; 
 
-        [System.Obsolete]
+        private void Awake()
+        {
+            acceptedSet = new HashSet<string>();
+            if (acceptedTypes != null)
+            {
+                for (int i = 0; i < acceptedTypes.Length; i++)
+                {
+                    if (!string.IsNullOrWhiteSpace(acceptedTypes[i]))
+                        acceptedSet.Add(acceptedTypes[i].Trim().ToLowerInvariant());
+                }
+            }
+        }
+
         private void Start()
         {
             sfxManager = FindObjectOfType<StreamingAudioManager>();
-            if (sfxManager == null)
-            {
-               //Debug.LogWarning("BinTrigger: No StreamingAudioManager found.");
-            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            BoxData box = other.GetComponent<BoxData>();
+            var box = other.GetComponent<BoxData>();
             if (box == null) return;
 
-            string boxType = box.boxType.Trim().ToLowerInvariant();
+            string boxType = (box.boxType ?? string.Empty).Trim().ToLowerInvariant();
+            bool isCorrect = acceptedSet != null && acceptedSet.Contains(boxType);
 
-            bool isCorrect = false;
-            foreach (string accepted in acceptedTypes)
-            {
-                if (boxType == accepted.Trim().ToLowerInvariant())
-                {
-                    isCorrect = true;
-                    break;
-                }
-            }
-
-
-            GameManager.Instance.RecordSort(boxType, isCorrect);
+            GameManager.Instance.RecordSort(isCorrect);
 
             if (isCorrect)
             {
@@ -52,6 +54,13 @@ namespace Core
             {
                 incorrectCount++;
                 sfxManager?.PlayIncorrectSound();
+            }
+            
+            Analytics.AnalyticsManager.Instance?.LogSort(box.boxType, isCorrect);
+            if (!isCorrect)
+            {
+                var targetBinName = name; 
+                Analytics.AnalyticsManager.Instance?.LogMistake(box.boxType, targetBinName);
             }
 
             CratePoolManager.Instance.ReturnCrate(other.gameObject, box.boxType);

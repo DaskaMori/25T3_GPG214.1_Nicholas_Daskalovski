@@ -15,7 +15,7 @@ namespace SaveLoad
             {
                 string json = JsonUtility.ToJson(state, true);
                 File.WriteAllText(fullPath, json);
-                //Debug.Log("[SaveSystem] Saved to: " + fullPath);
+                Debug.Log("[SaveSystem] Saved to: " + fullPath);
             }
             catch (Exception e)
             {

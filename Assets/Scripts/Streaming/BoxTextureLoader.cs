@@ -58,7 +58,7 @@ namespace Streaming
             if (renderer == null) return;
 
             Material fallbackMat = new Material(renderer.sharedMaterial);
-            fallbackMat.color = Color.gray;
+            fallbackMat.color = Color.yellow;
             renderer.material = fallbackMat;
         }
     }

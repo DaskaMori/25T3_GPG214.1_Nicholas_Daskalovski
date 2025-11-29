@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8346d42d48a3a6b44893f4deaadb4bd3, type: 3}
       propertyPath: m_Name
-      value: Bin
+      value: CarbonBin
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -101,6 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4363f1b466ff47d419deee2b97312163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceptsType: 0
+  acceptedTypes:
+  - Carbon
+  - Heavy
   correctCount: 0
   incorrectCount: 0

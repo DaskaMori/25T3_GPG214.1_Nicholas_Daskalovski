@@ -1,90 +1,100 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Core;
-using SaveLoad;
 using UnityEngine;
 using UnityEngine.UI;
+using SaveLoad;  
 
 namespace UI
 {
     public class SaveLoadButtonUI : MonoBehaviour
     {
-        public InputField inputField;
-        public Dropdown dropdown;
+        [Header("UI")]
+        public InputField inputField;   
+        public Dropdown dropdown;       
         public Button saveButton;
         public Button loadButton;
 
-        private string saveFolder => Application.persistentDataPath;
+        [Header("Systems")]
+        public SaveManager saveManager; 
 
-        private void Start()
+        void Awake()
         {
-            RefreshDropdown();
+            if (!saveManager) saveManager = FindObjectOfType<SaveManager>();
+
+            if (saveButton) saveButton.onClick.AddListener(OnClickSave);
+            if (loadButton) loadButton.onClick.AddListener(OnClickLoad);
         }
 
-        public void SaveGame()
+        void Start()
         {
-            if (inputField == null)
-            {
-                //Debug.LogError("InputField reference is missing!");
-                return;
-            }
-
-            string saveName = inputField.text.Trim();
-            //Debug.Log($"[SaveLoadButtonUI] Save name entered: '{saveName}'");
-
-            if (string.IsNullOrEmpty(saveName))
-            {
-                //Debug.LogWarning("[SaveLoadButtonUI] Save name is empty. Aborting save.");
-                return;
-            }
-
-            string filename = saveName;
-            SaveLoad.SaveSystem.SaveToFile(GameManager.Instance.State, filename);
-
             RefreshDropdown();
+            SyncInputWithCurrentProfile();
         }
 
 
-
-
-        public void LoadGame()
+        void OnClickSave()
         {
-            string selected = dropdown.options[dropdown.value].text;
+            if (!saveManager) return;
+
+            var typed = inputField ? inputField.text.Trim() : string.Empty;
+            if (!string.IsNullOrEmpty(typed))
+                saveManager.SetCurrentProfile(typed);
+
+            saveManager.SaveNow();   
+
+            RefreshDropdown();
+            SelectDropdownCurrent();
+            SyncInputWithCurrentProfile();
+        }
+
+        void OnClickLoad()
+        {
+            if (!saveManager || dropdown == null || dropdown.options.Count == 0) return;
+
+            var selected = dropdown.options[dropdown.value].text;
             if (string.IsNullOrEmpty(selected) || selected == "No saves found") return;
 
-            GameState loaded = SaveSystem.LoadFromFile(selected);
-            if (loaded != null)
-            {
-                GameManager.Instance.State = loaded;
-                Debug.Log($"Loaded save: {selected}");
-            }
+            saveManager.LoadProfile(selected);  // switches and loads that profile
+
+            RefreshDropdown();
+            SelectDropdownCurrent();
+            SyncInputWithCurrentProfile();
         }
 
 
-        private void RefreshDropdown()
+        void RefreshDropdown()
         {
-            if (dropdown == null) return;
+            if (dropdown == null || saveManager == null) return;
 
-            string[] files = Directory.GetFiles(saveFolder, "save_*.json");
-            List<string> names = files
-                .Select(Path.GetFileNameWithoutExtension)
-                .Select(name => name.Replace("save_", ""))
-                .ToList();
-
-
-            dropdown.ClearOptions();
-            if (names.Count == 0)
+            var profiles = saveManager.ListProfiles(); // discovers "*_savegame.json"
+            if (profiles.Count == 0)
             {
-                names.Add("No saves found");
+                dropdown.ClearOptions();
+                dropdown.AddOptions(new List<string> { "No saves found" });
                 dropdown.interactable = false;
-            }
-            else
-            {
-                dropdown.interactable = true;
+                return;
             }
 
-            dropdown.AddOptions(names);
+            dropdown.interactable = true;
+            dropdown.ClearOptions();
+            dropdown.AddOptions(profiles);
+
+            SelectDropdownCurrent();
+        }
+
+        void SelectDropdownCurrent()
+        {
+            if (dropdown == null || saveManager == null || dropdown.options.Count == 0) return;
+
+            var target = saveManager.currentProfileName;
+            int idx = dropdown.options.FindIndex(o => o.text == target);
+            dropdown.value = Mathf.Clamp(idx < 0 ? 0 : idx, 0, dropdown.options.Count - 1);
+            dropdown.RefreshShownValue();
+        }
+
+        void SyncInputWithCurrentProfile()
+        {
+            if (inputField != null && saveManager != null)
+                inputField.text = saveManager.currentProfileName;
         }
     }
 }

@@ -1,15 +1,17 @@
-using SaveLoad;
-using Spawning;
 using UnityEngine;
-using UI;
+using Core.Conveyor;
 
 namespace Core
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance { get; set; }
-
-        public GameState State { get; set; } = new GameState();
+        public static GameManager Instance { get; private set; }
+        
+        private int liveCorrect = 0;
+        private int liveIncorrect = 0;
+        
+        private int? loadedCorrect = null;
+        private int? loadedIncorrect = null;
 
         private void Awake()
         {
@@ -23,34 +25,34 @@ namespace Core
             DontDestroyOnLoad(gameObject);
         }
 
-        public void SaveGame(string saveName)
+        public void RecordSort(bool isCorrect)
         {
-            State.CaptureActiveCrates();  // Capture crates in scene
-            SaveSystem.SaveToFile(State, saveName);
-        }
+            if (isCorrect) liveCorrect++;
+            else           liveIncorrect++;
 
-        public void LoadGame(string saveName)
-        {
-            GameState loaded = SaveSystem.LoadFromFile(saveName);
-            if (loaded != null)
+            if (loadedCorrect.HasValue && loadedIncorrect.HasValue)
             {
-                State = loaded;
-                State.RestoreCratesFromState(); // Rebuild crates
-            }
-            else
-            {
-                State = new GameState();
+                if (isCorrect) loadedCorrect++;
+                else           loadedIncorrect++;
             }
         }
+        
+        public int GetTotalCorrectlySorted()  => loadedCorrect   ?? liveCorrect;
+        public int GetTotalIncorrectlySorted()=> loadedIncorrect ?? liveIncorrect;
 
-
-
-        public void RecordSort(string binColor, bool isCorrect)
+        
+        public void ApplyLoadedTotals(int correct, int incorrect)
         {
-            State.Increment(binColor, isCorrect);
+            loadedCorrect = correct;
+            loadedIncorrect = incorrect;
+
+            Debug.Log($"[GameManager] Loaded totals → correct={correct}, incorrect={incorrect}");
         }
-
-
-
+        
+        public void ClearLoadedTotals()
+        {
+            loadedCorrect = null;
+            loadedIncorrect = null;
+        }
     }
 }

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5983930d50c3ef408b48bc5034c036f, type: 3}
+  m_Name: Saboteur
+  m_EditorClassIdentifier: 
+  id: Saboteur
+  description: Saboteur reverses the conveyor belts to cause mayhem
+  icon: {fileID: 1813614101, guid: baf0f8af9646fba4dab6aed3567e2577, type: 3}
+  targetState: 3
+  duration: 5
+  affectAllConveyors: 1
+  affectCount: 1
+  weight: 1

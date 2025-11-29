@@ -64,50 +64,5 @@ namespace Spawning
                 crate.name = "Crate_" + chosen.crateType;
             }
         }
-        
-        public void SaveStateTo(GameState state)
-        {
-            state.activeCrates.Clear();
-            foreach (var crate in GameObject.FindGameObjectsWithTag("Crate"))
-            {
-                var data = crate.GetComponent<BoxData>();
-                if (data != null)
-                {
-                    state.activeCrates.Add(new CrateSnapshot
-                    {
-                        crateType = data.boxType,
-                        position = crate.transform.position,
-                        rotation = crate.transform.rotation
-                    });
-                }
-            }
-
-            state.spawnTimer = this.timer;
-        }
-        
-        public void LoadStateFrom(GameState state)
-        {
-            foreach (var crate in GameObject.FindGameObjectsWithTag("Crate"))
-            {
-                Destroy(crate); 
-            }
-
-            foreach (var snapshot in state.activeCrates)
-            {
-                GameObject crate = CratePoolManager.Instance.GetCrate(snapshot.crateType, snapshot.position);
-                if (crate == null) continue;
-
-                crate.transform.rotation = snapshot.rotation;
-
-                var data = crate.GetComponent<BoxData>();
-                data?.SetType(snapshot.crateType);
-
-                var loader = crate.GetComponent<BoxTextureLoader>();
-                loader?.LoadTextureFromStreamingAssets();
-            }
-
-            this.timer = state.spawnTimer;
-        }
-
     }
 }

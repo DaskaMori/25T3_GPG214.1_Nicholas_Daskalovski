@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core
+namespace Core.Conveyor
 {
     public class ConveyorSurface : MonoBehaviour
     {

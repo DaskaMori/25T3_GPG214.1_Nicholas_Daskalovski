@@ -1,0 +1,29 @@
+ManifestFileVersion: 0
+UnityVersion: 6000.0.60f1
+CRC: 2029595447
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 748f2d9fd7368c7c11aa6941c68db493
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f351bc67e4e8c9405b442592874aeebc
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 1c2b12bba63931fd8db63bc7564afb75
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: f5983930d50c3ef408b48bc5034c036f, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Scripts/DLC/Jammer.asset
+- Assets/Scripts/DLC/Power Leech.asset
+- Assets/Scripts/DLC/Saboteur.asset
+Dependencies: []
