@@ -13,7 +13,7 @@ namespace ProceduralGen
 
         public List<PoolEntry> entries = new();
 
-        readonly Dictionary<GameObject, Queue<GameObject>> _pool = new();
+        readonly Dictionary<GameObject, Queue<GameObject>> pool = new();
 
         void Awake()
         {
@@ -32,7 +32,7 @@ namespace ProceduralGen
 
         Queue<GameObject> GetQ(GameObject p)
         {
-            if (!_pool.TryGetValue(p, out var q)) { q = new Queue<GameObject>(); _pool[p] = q; }
+            if (!pool.TryGetValue(p, out var q)) { q = new Queue<GameObject>(); pool[p] = q; }
             return q;
         }
 

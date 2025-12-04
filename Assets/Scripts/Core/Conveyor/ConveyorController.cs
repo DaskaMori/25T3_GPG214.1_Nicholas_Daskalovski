@@ -72,13 +72,12 @@ namespace Core.Conveyor
             currentState.OnEnter(this);
             lastTransitionTime = Time.time;
 
-            // hook for  analytics 
+            // add hook for  analytics 
             // Debug.Log($"Conveyor: {prev} -> {currentStateId}");
         }
 
         public ConveyorStateId GetState() => currentStateId;
 
-        // helpers used by states
         public static float GetWeight(Rigidbody rb)
         {
             var data = rb.GetComponent<Core.BoxData>();

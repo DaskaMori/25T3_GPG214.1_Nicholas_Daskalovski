@@ -81,7 +81,7 @@ namespace UI
             SelectDropdownCurrent();
         }
 
-        void OnClickCreateOrSwitch()
+        /*void OnClickCreateOrSwitch()
         {
             if (!saveManager) return;
 
@@ -95,7 +95,7 @@ namespace UI
             PopulateProfiles();
             SelectDropdownCurrent();
             SyncProfileNameField();
-        }
+        }*/
         
         void SetProfileLabel(string value)
         {

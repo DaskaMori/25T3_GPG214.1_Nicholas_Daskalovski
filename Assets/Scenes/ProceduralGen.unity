@@ -450,7 +450,7 @@ MonoBehaviour:
   fxOverloaded: {r: 1, g: 0.5, b: 0, a: 1}
   waitForConveyors: 1
   waitTimeout: 5
-  dlcEnabled: 0
+  dlcEnabled: 1
   enemyMenuRoot: {fileID: 1199103926}
 --- !u!4 &292798713
 Transform:
@@ -3318,22 +3318,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CratePoolManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6859916589133069044, guid: 77fc25128127d904da70f2248db8cfd1, type: 3}
-      propertyPath: crateTypes.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6859916589133069044, guid: 77fc25128127d904da70f2248db8cfd1, type: 3}
-      propertyPath: crateTypes.Array.data[3].type
-      value: Heavy
-      objectReference: {fileID: 0}
-    - target: {fileID: 6859916589133069044, guid: 77fc25128127d904da70f2248db8cfd1, type: 3}
-      propertyPath: crateTypes.Array.data[3].prefab
-      value: 
-      objectReference: {fileID: 4478063807441447940, guid: 6171ef9c5bcada9428fc0e976d71276a, type: 3}
-    - target: {fileID: 6859916589133069044, guid: 77fc25128127d904da70f2248db8cfd1, type: 3}
-      propertyPath: crateTypes.Array.data[3].prewarmCount
-      value: 75
-      objectReference: {fileID: 0}
     - target: {fileID: 8918581404851092544, guid: 77fc25128127d904da70f2248db8cfd1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15.3
@@ -4150,13 +4134,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881873548}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.27966142, y: 0, z: 0, w: 0.96009874}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 32.48, y: 0, z: 0}
 --- !u!114 &1881873551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5416,18 +5400,18 @@ SceneRoots:
   m_Roots:
   - {fileID: 1049930495}
   - {fileID: 1881873550}
+  - {fileID: 511341644}
   - {fileID: 1225761522}
+  - {fileID: 292798713}
+  - {fileID: 1079695026}
+  - {fileID: 584028689}
+  - {fileID: 1862139788}
   - {fileID: 1480461696}
   - {fileID: 60158857}
   - {fileID: 1924704942}
-  - {fileID: 511341644}
-  - {fileID: 1335542376}
-  - {fileID: 292798713}
-  - {fileID: 1194437403}
-  - {fileID: 1984971916}
-  - {fileID: 1079695026}
-  - {fileID: 328985332}
   - {fileID: 1914126974}
-  - {fileID: 584028689}
   - {fileID: 1050875524}
-  - {fileID: 1862139788}
+  - {fileID: 1194437403}
+  - {fileID: 328985332}
+  - {fileID: 1335542376}
+  - {fileID: 1984971916}

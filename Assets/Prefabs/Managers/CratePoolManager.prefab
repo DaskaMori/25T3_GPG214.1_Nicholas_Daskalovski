@@ -54,3 +54,6 @@ MonoBehaviour:
   - type: Metal
     prefab: {fileID: 4478063807441447940, guid: 6171ef9c5bcada9428fc0e976d71276a, type: 3}
     prewarmCount: 100
+  - type: Heavy
+    prefab: {fileID: 4478063807441447940, guid: 6171ef9c5bcada9428fc0e976d71276a, type: 3}
+    prewarmCount: 75

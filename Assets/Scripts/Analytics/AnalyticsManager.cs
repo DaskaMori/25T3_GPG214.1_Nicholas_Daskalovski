@@ -72,9 +72,9 @@ namespace Analytics
         public void LogDlc(string enemyId, string action)
             => Enqueue(new AnalyticsRecord(currentProfile, "dlc", $"{enemyId}:{action}", 1, false));
 
-        public void LogRoundEnd(int correct, int incorrect, int hazardsAverted)
+        /*public void LogRoundEnd(int correct, int incorrect, int hazardsAverted)
             => Enqueue(new AnalyticsRecord(currentProfile, "round_end",
-                   detail: $"c={correct},i={incorrect},h={hazardsAverted}", amount: correct + incorrect, flag:false));
+                   detail: $"c={correct},i={incorrect},h={hazardsAverted}", amount: correct + incorrect, flag:false));*/
 
         public void ForceFlushNow() => TryFlush(true);
 

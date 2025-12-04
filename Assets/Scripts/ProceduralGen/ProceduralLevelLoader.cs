@@ -116,7 +116,34 @@ namespace ProceduralGen
                 Debug.LogWarning($"[ProceduralLevelLoader] Missing texture: {path}");
                 yield break;
             }
+            
+            var entryPrefab = mappings[0].prefab;
+            var entryOffset = mappings[0].offset;
 
+            int size = 3;
+            int placed = 0;
+            for (int fy = 0; fy < size; fy++)
+            {
+                for (int fx = 0; fx < size; fx++)
+                {
+                    Vector3 pos = origin + new Vector3(fx * cellSize, 0f, fy * cellSize) + entryOffset;
+
+                    if (mappings[0].usePool && pool != null)
+                    {
+                        var go = pool.Get(entryPrefab, pos, Quaternion.identity, staticParent);
+                        if (markStatic && go) go.isStatic = true;
+                    }
+                    else
+                    {
+                        var go = Instantiate(entryPrefab, pos, Quaternion.identity, staticParent);
+                        if (markStatic && go) go.isStatic = true;
+                    }
+                    placed++;
+                }
+            }
+
+            Debug.Log($"[ProceduralLevelLoader] Fallback layout spawned. Total placed={placed}");
+          
             var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false, false);
             tex.LoadImage(File.ReadAllBytes(path));
 
@@ -230,12 +257,8 @@ namespace ProceduralGen
     
     public class SimplePool : MonoBehaviour
     {
-        // per-prefab stacks
         private readonly Dictionary<GameObject, Stack<GameObject>> pool = new();
 
-        /// <summary>
-        /// Get an instance (reused or new). Parent is optional.
-        /// </summary>
         public GameObject Get(GameObject prefab, Vector3 pos, Quaternion rot, Transform parent = null)
         {
             if (prefab == null) return null;
